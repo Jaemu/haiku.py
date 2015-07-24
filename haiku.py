@@ -7,7 +7,9 @@ class Haiku:
 		self.haikus = {}
 
 
-	def user(name='bob'):
-		haiku = {1:"name is the coolest", 2:"this is the worst haiku guys", 3:"I am not clever"}
-		haiku[1] = haiku[1].replace('name', name)
+	def userHaiku(self, name='bob'):
+		haiku = {'1':"name is the coolest", 
+		'2':"this is the worst haiku guys", 
+		'3':"I am not clever"}
+		haiku['1'] = haiku['1'].replace('name', name)
 		return haiku

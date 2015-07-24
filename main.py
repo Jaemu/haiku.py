@@ -1,5 +1,7 @@
 from flask import Flask
-import haiku
+from flask import json
+from haiku import Haiku
+haiku = Haiku()
 
 
 app = Flask(__name__)
@@ -13,12 +15,16 @@ def hello():
 
 
 @app.route('/haiku/<name>')
-def name_haiku(name='bob'):
-	h = haiku.user(name)
-	return Flask.jsonify(**h)
+def name_haiku(name):
+	h = haiku.userHaiku(name)
+	return json.jsonify(**h)
 
 
 @app.errorhandler(404)
 def page_not_found(e):
 	"""Return a custom 404 error."""
 	return 'Sorry, nothing at this URL.', 404
+
+
+if __name__ == '__main__':
+    app.run()
