@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import json
 from haiku import Haiku
+import nltk
 haiku = Haiku()
 
 

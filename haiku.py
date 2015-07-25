@@ -1,3 +1,5 @@
+import nltk
+
 class Haiku:
 
 
