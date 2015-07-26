@@ -3,7 +3,6 @@
 # 
 # 
 import string
-import nltk.downloader
 from nltk.corpus import cmudict
 
 class Haiku:
