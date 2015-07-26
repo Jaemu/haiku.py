@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import json
 from haiku import Haiku
+
 haiku = Haiku()
 
 
@@ -30,3 +31,6 @@ def count_syllables(word):
 def page_not_found(e):
 	"""Return a custom 404 error."""
 	return 'Sorry, nothing at this URL.', 404
+
+#if __name__ == '__main__':
+#	app.run()

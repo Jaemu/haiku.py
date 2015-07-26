@@ -1,7 +1,7 @@
 # Syllable counter c/o 
 # Jordan Boyd-Graber (https://groups.google.com/forum/#!msg/nltk-users/mCOh_u7V8_I/HsBNcLYM54EJ)
 # 
-import curses
+import curses.ascii
 from curses.ascii import isdigit
 import nltk.downloader
 from nltk.corpus import cmudict
