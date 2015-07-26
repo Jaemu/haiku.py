@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import json
 from haiku import Haiku
-import nltk
 haiku = Haiku()
 
 
@@ -19,6 +18,12 @@ def hello():
 def name_haiku(name):
 	h = haiku.userHaiku(name)
 	return json.jsonify(**h)
+
+
+@app.route('/syllable/<word>')
+def count_syllables(word):
+	count = haiku.countSyllables(word)
+	return json.jsonify(**count)
 
 
 @app.errorhandler(404)

@@ -1,13 +1,16 @@
-import nltk
+# Syllable counter c/o 
+# Jordan Boyd-Graber (https://groups.google.com/forum/#!msg/nltk-users/mCOh_u7V8_I/HsBNcLYM54EJ)
+# 
+import curses
+from curses.ascii import isdigit
+import nltk.downloader
+from nltk.corpus import cmudict
 
 class Haiku:
 
 
 	def __init__(self):
-		self.haikuNameSet = ['bob']
-		self.syllablesToNames = {'1': 'bob'}
-		self.haikus = {}
-
+		self.dict = cmudict.dict()
 
 	def userHaiku(self, name='bob'):
 		haiku = {'1':"name is the coolest", 
@@ -15,3 +18,8 @@ class Haiku:
 		'3':"I am not clever"}
 		haiku['1'] = haiku['1'].replace('name', name)
 		return haiku
+
+	def countSyllables(self, word='hello'):
+		return {
+			word : max([len([y for y in x if isdigit(y[-1])]) for x in self.dict[word.lower()]])
+		}
