@@ -1,8 +1,8 @@
 # Syllable counter c/o 
 # Jordan Boyd-Graber (https://groups.google.com/forum/#!msg/nltk-users/mCOh_u7V8_I/HsBNcLYM54EJ)
 # 
-import curses.ascii
-from curses.ascii import isdigit
+# 
+import string
 import nltk.downloader
 from nltk.corpus import cmudict
 
@@ -21,5 +21,5 @@ class Haiku:
 
 	def countSyllables(self, word='hello'):
 		return {
-			word : max([len([y for y in x if isdigit(y[-1])]) for x in self.dict[word.lower()]])
+			word : max([len([y for y in x if y[-1] in string.digits]) for x in self.dict[word.lower()]])
 		}
