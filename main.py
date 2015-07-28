@@ -27,10 +27,14 @@ def count_syllables(word):
 	return json.jsonify(**count)
 
 
+@app.route('/info/<word>')
+def get_word_data(word):
+	return json.jsonify(**haiku.getWordData(word))
+
 @app.errorhandler(404)
 def page_not_found(e):
 	"""Return a custom 404 error."""
 	return 'Sorry, nothing at this URL.', 404
 
-if __name__ == '__main__':
-	app.run()
+#if __name__ == '__main__':
+#		app.run()
