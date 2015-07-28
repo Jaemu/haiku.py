@@ -4,7 +4,6 @@
 # 
 import string
 import nltk
-from nltk.downloader import download
 from nltk.corpus import cmudict, ptb, brown
 from nltk import word_tokenize,sent_tokenize
 
