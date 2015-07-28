@@ -20,10 +20,12 @@ class Haiku:
 
 	def countSyllables(self, word='hello'):
 		try:
-			return {
-				word : max([len([y for y in x if y[-1] in string.digits]) for x in self.dict[word.lower()]])
-			}
+			words = word.split(',')
+			result = {}
+			for word in words:
+				result[word] = max([len([y for y in x if y[-1] in string.digits]) for x in self.dict[word.lower()]])
+			return result
 		except:
 			return {
-				word: 'Error -- not a recognized word'
+				word: 'Error: ' + word + ' is not a recognized word'
 			}
