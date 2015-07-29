@@ -22,7 +22,7 @@ class Haiku:
 
 	def countSyllables(self, word='hello'):
 		try:
-			words = word.split(',')
+			words = word.strip().split(',')
 			result = {}
 			for word in words:
 				result[word] = max([len([y for y in x if y[-1] in string.digits]) for x in self.cmudict[word.lower()]])

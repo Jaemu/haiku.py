@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask import json
 from haiku import Haiku
 
@@ -10,9 +10,9 @@ app.config['DEBUG'] = True
 
 
 @app.route('/')
-def hello():
-	"""Return a friendly HTTP greeting."""
-	return 'Hello World!'
+def root():
+	return render_template('index.html')
+
 
 
 @app.route('/haiku/<name>')
@@ -36,5 +36,5 @@ def page_not_found(e):
 	"""Return a custom 404 error."""
 	return 'Sorry, nothing at this URL.', 404
 
-#if __name__ == '__main__':
-#		app.run()
+if __name__ == '__main__':
+		app.run()
