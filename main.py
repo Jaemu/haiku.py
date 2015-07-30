@@ -15,8 +15,8 @@ def root():
 
 
 
-@app.route('/haiku/<name>')
-def name_haiku(name):
+@app.route('/haiku')
+def name_haiku():
 	h = haiku.makeHaiku()
 	return json.jsonify(**h)
 
