@@ -17,7 +17,7 @@ def root():
 
 @app.route('/haiku/<name>')
 def name_haiku(name):
-	h = haiku.userHaiku(name)
+	h = haiku.makeHaiku()
 	return json.jsonify(**h)
 
 
@@ -31,10 +31,14 @@ def count_syllables(word):
 def get_word_data(word):
 	return json.jsonify(**haiku.getWordData(word))
 
+@app.route('/similar/<word>')
+def similar_words(word):
+	return json.jsonify(**haiku.getSimilarWords(word))
+
 @app.errorhandler(404)
 def page_not_found(e):
 	"""Return a custom 404 error."""
 	return 'Sorry, nothing at this URL.', 404
 
-#if __name__ == '__main__':
-#		app.run()
+if __name__ == '__main__':
+		app.run()
