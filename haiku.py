@@ -22,20 +22,15 @@ class Haiku:
 		self.pattern = {
 			'line 1': [
 				("NNS", 2),
-				("IN", 1),
-				("DT", 1),
-				("NN",1)
+				("VBG", 3)
 			],
 			'line 2': [
-				("DT", 1),
-				("VBN", 2),
-				("NNS", 2),
-				("VBG",2)
+				("VBG", 3),
+				("JJ", 2),
+				("NNS", 2)
 			],
 			'line 3': [
-				("IN", 1),
-				("DT", 1),
-				("NNS", 2),
+				("JJS", 2),
 				("NNS", 1)
 
 			]
