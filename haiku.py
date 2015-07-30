@@ -20,17 +20,16 @@ class Haiku:
 		haiku['1'] = haiku['1'].replace('name', name)
 		return haiku
 
-	def countSyllables(self, word='hello'):
-		try:
-			words = word.strip().split(',')
-			result = {}
-			for word in words:
+	def countSyllables(self, query='hello'):
+		result = {}
+		words = query.strip().split(',')
+		for word in words:
+			try:
 				result[word] = max([len([y for y in x if y[-1] in string.digits]) for x in self.cmudict[word.lower()]])
-			return result
-		except:
-			return {
-				word: 'Error: ' + word + ' is not a recognized word'
-			}
+			except:
+				result[word] = 'Error - ' + word + ' is not a recognized word'
+		return result
+
 	def getWordData(self, word="hello world", pos="UH"):
 		try:
 			words = word.replace(',', ' ')
