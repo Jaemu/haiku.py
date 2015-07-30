@@ -31,7 +31,7 @@ class Haiku:
 			],
 			'line 3': [
 				("JJS", 2),
-				("NNS", 1)
+				("NN", 3)
 
 			]
 		}
