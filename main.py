@@ -16,11 +16,14 @@ def root():
 
 
 @app.route('/haiku')
+def haiku_no_name():
+	h = haiku.makeHaiku()
+	return json.jsonify(**h)
+
 @app.route('/haiku/<word>')
 def name_haiku(word):
 	h = haiku.makeHaiku()
 	return json.jsonify(**h)
-
 
 @app.route('/syllable/<word>')
 def count_syllables(word):
@@ -37,6 +40,9 @@ def similar_words(word):
 	return json.jsonify(**haiku.getSimilarWords(word))
 
 @app.route('/insult')
+def insult_none():
+	return json.jsonify(**haiku.insult(name))
+
 @app.route('/insult/<name>')
 def insult(name):
 	return json.jsonify(**haiku.insult(name))
