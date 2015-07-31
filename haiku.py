@@ -26,11 +26,11 @@ class Haiku:
 			],
 			'line 2': [
 				("VBG", 3),
-				("JJ", 2),
+				["in the", "with some", "like some", "without my"],
 				("NNS", 2)
 			],
 			'line 3': [
-				("JJS", 2),
+				("JJ", 2),
 				("NN", 3)
 
 			]
@@ -83,11 +83,14 @@ class Haiku:
 		for line in self.pattern:
 			haiku[line] = []
 			for i in xrange(len(self.pattern[line])):
-				currentPattern = self.pattern[line][i]
-				category = currentPattern[0]
-				syllable = currentPattern[1]
-				similarWords = [x for x in self.tagged_words if x[1] == category and x[2] == syllable]
-				haiku[line].append(random.choice(similarWords)[0])
+				if not (len(self.pattern[line][i]) > 2):
+					currentPattern = self.pattern[line][i]
+					category = currentPattern[0]
+					syllable = currentPattern[1]
+					similarWords = [x for x in self.tagged_words if x[1] == category and x[2] == syllable]
+					haiku[line].append(random.choice(similarWords)[0])
+				else:
+					haiku[line].append(random.choice(self.pattern[line][i]))
 		return haiku
 
 
