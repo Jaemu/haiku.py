@@ -16,7 +16,8 @@ def root():
 
 
 @app.route('/haiku')
-def name_haiku():
+@app.route('/haiku/<word>')
+def name_haiku(word):
 	h = haiku.makeHaiku()
 	return json.jsonify(**h)
 
@@ -34,6 +35,11 @@ def get_word_data(word):
 @app.route('/similar/<word>')
 def similar_words(word):
 	return json.jsonify(**haiku.getSimilarWords(word))
+
+@app.route('/insult')
+@app.route('/insult/<name>')
+def insult(name):
+	return json.jsonify(**haiku.insult(name))
 
 @app.errorhandler(404)
 def page_not_found(e):

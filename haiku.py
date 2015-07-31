@@ -26,7 +26,7 @@ class Haiku:
 			],
 			'line 2': [
 				("VBG", 3),
-				["in the", "with some", "like some", "without my"],
+				["in the", "with some", "like some", "without my", "like the", "of the"],
 				("NNS", 2)
 			],
 			'line 3': [
@@ -34,7 +34,51 @@ class Haiku:
 				("NN", 3)
 
 			]
-		}
+		},
+		self.insult_pattern = [
+			"you're the",
+			("JJS"),
+			("NN"),
+			("that ever"),
+			("VBD")
+		]
+		self.grammar = [
+			"CC",
+			"CD",
+			"DT",
+			"EX",
+			"FW",
+			"IN",
+			"JJ",
+			"JJR",
+			"JJS",
+			"LS",
+			"MD",
+			"NN",
+			"NNS",
+			"NNP",
+			"NNPS",
+			"PDT",
+			"POS",
+			"PRP",
+			"PRP$",
+			"RB",
+			"RBR",
+			"RBS",
+			"RP",
+			"SYM",
+			"TO",
+			"UH",
+			"VB",
+			"VBD",
+			"VBG",
+			"VBN",
+			"VBP",
+			"VBZ",
+			"WDT",
+			"WP",
+			"WP$",
+		]
 
 	def userHaiku(self, name='bob'):
 		haiku = {'1':"name is the coolest", 
@@ -92,5 +136,18 @@ class Haiku:
 				else:
 					haiku[line].append(random.choice(self.pattern[line][i]))
 		return haiku
+
+	def insult(self, name="Fred"):
+		currentInsult = name + ", "
+		for pattern in self.insult_pattern:
+			if pattern in self.grammar:
+				similarWords = [x for x in self.tagged_words if x[1] == pattern]
+				currentInsult = currentInsult + ' ' + random.choice(similarWords)[0]
+			else:
+				currentInsult = currentInsult + ' ' + pattern
+		currentInsult = currentInsult + '.'
+		return {
+			'result': currentInsult
+		}
 
 
