@@ -40,11 +40,12 @@ def similar_words(word):
 	return json.jsonify(**haiku.getSimilarWords(word))
 
 @app.route('/insult')
+@app.route('/insult/')
 def insult_none():
-	return json.jsonify(**haiku.insult(name))
+	return json.jsonify(**haiku.insult())
 
 @app.route('/insult/<name>')
-def insult(name):
+def insult(name="fred"):
 	return json.jsonify(**haiku.insult(name))
 
 @app.errorhandler(404)
