@@ -130,7 +130,6 @@ class Haiku:
 	def makeHaiku(self):
 		haiku = {}
 		for line in self.pattern:
-			print(line)
 			haiku[line] = []
 			for i in xrange(len(self.pattern[line])):
 				if not (len(self.pattern[line][i]) > 2):
