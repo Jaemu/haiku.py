@@ -142,7 +142,7 @@ class Haiku:
 					haiku[line].append(random.choice(self.pattern[line][i]))
 		return haiku
 
-	def insult(self, name="Fred"):
+	def insult(self, name="Sunshine"):
 		currentInsult = name + ", "
 		insultPattern = random.choice([self.insult_pattern, self.worse_insult_pattern])
 		for pattern in insultPattern:
