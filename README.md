@@ -1,7 +1,7 @@
-## Python Flask Skeleton for Google App Engine
+## Haiku.py
+#### haiku-as-a-service 
 
-A skeleton for building Python applications on Google App Engine with the
-[Flask micro framework](http://flask.pocoo.org).
+Built on the Python Flask Skeleton for Google App Engine using [nltk for app engine](https://github.com/rutherford/nltk-gae)
 
 See our other [Google Cloud Platform github
 repos](https://github.com/GoogleCloudPlatform) for sample applications and
