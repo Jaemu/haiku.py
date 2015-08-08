@@ -19,30 +19,27 @@ class Haiku:
 		#for i in xrange(len(self.tagged_words)):
 		#	self.tagged_words[i] = [self.tagged_words[i][0], self.tagged_words[i][1], self._syllableHelper(self.tagged_words[i][0])]
 		#pickle.dump(self.tagged_words, open("tagged_words_syl.p", "wb"))
-		self.pattern = {
-			'line 1': [
+		self.pattern = [[
 				("NNS", 2),
 				("VBG", 3)
-			],
-			'line 2': [
+			],[
 				("VBG", 3),
 				["in the", "with some", "like some", "without my", "like the", "of the"],
 				("NNS", 2)
-			],
-			'line 3': [
+			],[
 				("JJ", 2),
 				("NN", 3)
 			]
-		}
+		]
 		self.insult_pattern = [
-			"you're the",
+			"You're the",
 			("JJS"),
 			("NN"),
 			("that ever"),
 			("VBD")
 		]
 		self.worse_insult_pattern = [
-			"your mother was a",
+			"Your mother was a",
 			("NN"),
 			"and your father smelled of",
 			("NNS")
@@ -129,7 +126,7 @@ class Haiku:
 
 	def makeHaiku(self):
 		haiku = {}
-		for line in self.pattern:
+		for line in xrange(len(self.pattern)):
 			haiku[line] = []
 			for i in xrange(len(self.pattern[line])):
 				if not (len(self.pattern[line][i]) > 2):
@@ -140,10 +137,12 @@ class Haiku:
 					haiku[line].append(random.choice(similarWords)[0])
 				else:
 					haiku[line].append(random.choice(self.pattern[line][i]))
-		return haiku
+		return {
+			'haiku': haiku
+		}
 
 	def insult(self, name="Sunshine"):
-		currentInsult = name + ", "
+		currentInsult = ""
 		insultPattern = random.choice([self.insult_pattern, self.worse_insult_pattern])
 		for pattern in insultPattern:
 			if pattern in self.grammar:
