@@ -8,14 +8,12 @@ haiku = Haiku()
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-
 @app.route('/')
 def root():
 	return render_template('index.html')
 
-
-
 @app.route('/haiku')
+@app.route('/haiku.json')
 @app.route('/haiku/')
 def haiku_no_name():
 	h = haiku.makeHaiku()

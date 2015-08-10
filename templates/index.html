@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="http://jillmunson.com/images/favicon.ico">
 	  <link rel="apple-touch-icon" href="http://jillmunson.com/images/apple-touch-icon.png" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700|Open+Sans:700,400|Lato:400,100" />
-
+    <link rel="stylesheet" type="text/css" href="http://jillmunson.com/css/screen.css">
     <link rel="canonical" href="http://haiku.jillmunson.com/" />
 
     
@@ -44,6 +44,7 @@
     <style>
     	body {
     		overflow-x: hidden;
+        overflow-y: scroll;
     	}
     	h1 {
     		font-family: 'Lato', sans-serif;
@@ -52,6 +53,9 @@
     	p {
     		font-family: 'Merriweather', serif;
     	} 
+      .main-header {
+        height: 50vh;
+      }
     	.haiku-description {
     		text-align: center;
     	}
@@ -63,6 +67,47 @@
     		display: inline;
     		position: absolute;
     	}
+      .haiku-button {
+        border-radius: 10px;
+        background-color: #FE5760;
+        box-shadow: 2px 2px 2px rgba(0,0,0,.5);
+        color: #fff;
+        text-align: center;
+        max-width: 10em;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+      .haiku-button:hover {
+        background-color: #FE1823;
+      }
+      .haiku-button:active {
+        box-shadow: inset 2px 2px 2px rgba(0,0,0,.5);
+      }
+      .haiku-description {
+        margin-top: 2em;
+      }
+      .site-footer {
+        position: fixed;
+        bottom:0;
+      }
+      .haiku-result-line {
+        max-width: 80%;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .haiku-result {
+        border-radius: 10px;
+        height: 10em;
+      }
+      .haiku-about {
+        margin-bottom: 4em;
+        position: relative;
+        display: inline-block;
+      }
+      .site-footer {
+        width: 100%;
+        background-color: #000;
+      }
     </style>
 </head>
 <body class="nav-closed">
@@ -72,8 +117,6 @@
 
 
 	<header class="main-header">
-
-	<div class="main-header-overlay"></div>
 	    <div class="vertical">
 	        <div class="main-header-content inner">
 	            <h1 class="page-title">Haiku as a service</h1>
@@ -84,9 +127,17 @@
 
 	<main id="content" class="content" role="main">
 		<p class="haiku-description">Haiku.py is an API that returns a randomly-generated haiku.</p>
-		<p class="haiku-description">Demo: </p>
-		<p class="haiku-input-url">http://haiku.jillmunson.com/haiku/<input type="text" name="haiku_name" value="name" class="haiku-input-name"></p>
+    <div class="button haiku-button">
+      Haiku Me
+    </div>
 		<p class="haiku-description">Result: </p>
+    <div class="haiku-result">
+      <p id="line-1" class="haiku-result-line"></p>
+      <p id="line-2" class="haiku-result-line"></p>
+      <p id="line-3" class="haiku-result-line"></p>
+    </div>
+
+    <a href="http://jillmunson.com/project/haiku/about/" class="haiku-about">how this works</a>
 
 	</main>
 
@@ -97,6 +148,29 @@
 <script type="text/javascript" src="http://jillmunson.com/js/jquery.js"></script>
 <script type="text/javascript" src="http://jillmunson.com/js/jquery.fitvids.js"></script>
 <script type="text/javascript" src="http://jillmunson.com/js/index.js"></script>
+<script>
+  var Haiku = (function Haiku($){
+      function init(){
 
+      }
+      function getHaiku(event) {
+        console.log('Get haiku event: ' + event);
+        $.getJSON('/haiku.json', function(data){
+          console.log('Data: ' + data);
+          $('#line-1').text(data.haiku[0].join(',').replace(/,/g,' '));
+          $('#line-2').text(data.haiku[1].join(',').replace(/,/g,' '));
+          $('#line-3').text(data.haiku[2].join(',').replace(/,/g,' '));
+        })
+      }
+      return {
+        init: init,
+        getHaiku: getHaiku
+      }
+  }(jQuery || {}));
+  $(document).ready(function ready(){
+    Haiku.init();
+  })
+  .on('click', '.haiku-button', Haiku.getHaiku);
+</script>
 </body>
 </html>

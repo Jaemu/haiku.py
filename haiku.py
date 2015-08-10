@@ -27,8 +27,8 @@ class Haiku:
 				["in the", "with some", "like some", "without my", "like the", "of the"],
 				("NNS", 2)
 			],[
-				("JJ", 2),
-				("NN", 3)
+				("VBG", 2),
+				("RB", 3)
 			]
 		]
 		self.insult_pattern = [
