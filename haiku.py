@@ -20,6 +20,7 @@ class Haiku:
 		#	self.tagged_words[i] = [self.tagged_words[i][0], self.tagged_words[i][1], self._syllableHelper(self.tagged_words[i][0])]
 		#pickle.dump(self.tagged_words, open("tagged_words_syl.p", "wb"))
 		self.pattern = [[
+			[
 				("NNS", 2),
 				("VBG", 3)
 			],[
@@ -29,6 +30,21 @@ class Haiku:
 			],[
 				("VBG", 2),
 				("RB", 3)
+			]],
+			[[
+				("NNS", 1),
+				("VBG", 2),
+				("IN", 2)
+			],[
+				["I", "He", "She", "They"],
+				("VBD", 1),
+				["in the", "with the", "like the", "without my"],
+				("JJS", 2),
+				("NN", 1)
+			],[
+				("VBG", 2),
+				("RB", 3)
+			]
 			]
 		]
 		self.insult_pattern = [
@@ -82,13 +98,6 @@ class Haiku:
 			"WP$",
 		]
 
-	def userHaiku(self, name='bob'):
-		haiku = {'1':"name is the coolest", 
-		'2':"this is the worst haiku guys", 
-		'3':"I am not clever"}
-		haiku['1'] = haiku['1'].replace('name', name)
-		return haiku
-
 	def countSyllables(self, query='hello'):
 		result = {}
 		words = query.strip().split(',')
@@ -126,17 +135,18 @@ class Haiku:
 
 	def makeHaiku(self):
 		haiku = {}
-		for line in xrange(len(self.pattern)):
+		currentHaiku = random.choice(self.pattern)
+		for line in xrange(len(currentHaiku)):
 			haiku[line] = []
-			for i in xrange(len(self.pattern[line])):
-				if not (len(self.pattern[line][i]) > 2):
-					currentPattern = self.pattern[line][i]
+			for i in xrange(len(currentHaiku[line])):
+				if not (len(currentHaiku[line][i]) > 2):
+					currentPattern = currentHaiku[line][i]
 					category = currentPattern[0]
 					syllable = currentPattern[1]
 					similarWords = [x for x in self.tagged_words if x[1] == category and x[2] == syllable]
 					haiku[line].append(random.choice(similarWords)[0])
 				else:
-					haiku[line].append(random.choice(self.pattern[line][i]))
+					haiku[line].append(random.choice(currentHaiku[line][i]))
 		return {
 			'haiku': haiku
 		}
