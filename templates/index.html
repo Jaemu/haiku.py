@@ -151,12 +151,9 @@
 <script>
   var Haiku = (function Haiku($){
       function init(){
-
       }
       function getHaiku(event) {
-        console.log('Get haiku event: ' + event);
         $.getJSON('/haiku.json', function(data){
-          console.log('Data: ' + data);
           $('#line-1').text(data.haiku[0].join(',').replace(/,/g,' '));
           $('#line-2').text(data.haiku[1].join(',').replace(/,/g,' '));
           $('#line-3').text(data.haiku[2].join(',').replace(/,/g,' '));
