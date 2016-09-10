@@ -53,4 +53,4 @@ def page_not_found(e):
 	return 'Sorry, nothing at this URL.', 404
 
 if __name__ == '__main__':
-		app.run()
+		application.run(host='0.0.0.0')
