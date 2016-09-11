@@ -72,13 +72,12 @@ class lirr():
 		self.total_delay_times['cancellations'] = {}
 		start_times = {}
 		for cancel in self.cancels:
-			print cancel
 			line = ''
 			cancel = cancel.lower()
 			start_time = re.search(r'\d*:\d*..',cancel).group(0)
+			for line in set(self.station_map.values()):
+				self.total_delay_times['cancellations'][line] = 0
 			for station in self.station_map:
-				if station not in self.total_delay_times['cancellations']:
-					self.total_delay_times['cancellations'][station] = 0
 				if station in cancel:
 					line = self.station_map[station]
 			if start_time not in start_times:
