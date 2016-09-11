@@ -1,8 +1,10 @@
 from flask import Flask, render_template
 from flask import json
 from haiku import Haiku
+from lirr import lirr
 
 haiku = Haiku()
+l = lirr()
 
 
 app = Flask(__name__)
@@ -46,6 +48,10 @@ def insult_none():
 @app.route('/insult/<name>')
 def insult(name="fred"):
 	return json.jsonify(**haiku.insult(name))
+
+@app.route('/lirr')
+def lirr_delay():
+	return json.jsonify(l.return_delays())
 
 @app.errorhandler(404)
 def page_not_found(e):
