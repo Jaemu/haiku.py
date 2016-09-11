@@ -5,7 +5,7 @@ import re
 
 class lirr():
 
-	def __init__():
+	def __init__(self):
 		self.tweets = []
 		self.delays = []
 		self.cancels = []
@@ -30,34 +30,35 @@ class lirr():
 		auth.set_access_token(secrets['access_token'], secrets['secret_access_token'])
 		self.api = tweepy.API(auth)
 	
-	def load_tweets():	
+	def load_tweets(self):	
 		# Load 2 pages of tweets
 		self.tweets = [tweet.text for tweet in self.api.user_timeline(screen_name='lirr', count=300, page=1)+
 					   self.api.user_timeline(screen_name='lirr', count=300, page=2)]
 
-	def get_relevant_tweets():
+	def get_relevant_tweets(self):
 		for tweet in self.tweets:
 			if self.delay_regex.match(tweet):
 				self.delays.append(tweet)
 			elif self.canceled_regex.match(tweet):
 				self.cancels.append(tweet)
 
-	def process_delay_times():
+	def process_delay_times(self):
 		line = ''
 		for delay in self.delays:
+			delay = delay.lower()
 			#get branch
-			for station in station_map:
+			for station in self.station_map:
 				if station in delay:
-					line = station_map[station]
+					line = self.station_map[station]
 			#remove start/end times by starting at the 'is operating' substring
 			delay = delay[delay.find('operating'):]
 			delay_time = int(re.search(r'\d+',delay).group(0))
 			if line in self.total_delay_times:
-				total_delay_times[line] = total_delay_times[line] + delay_time
-			else
-				total_delay_times[line] = delay_time
+				self.total_delay_times[line] = self.total_delay_times[line] + delay_time
+			else:
+				self.total_delay_times[line] = delay_time
 
-	def return_delays():
+	def return_delays(self):
 		self.load_tweets()
 		self.get_relevant_tweets()
 		self.process_delay_times()
