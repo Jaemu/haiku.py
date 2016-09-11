@@ -31,6 +31,7 @@ class lirr():
 		self.api = tweepy.API(auth)
 	
 	def load_tweets(self):	
+		self.total_delay_times = {}
 		# Load 2 pages of tweets
 		self.tweets = [(tweet.text, tweet.created_at) for tweet in self.api.user_timeline(screen_name='lirr', count=300, page=1)+
 					   self.api.user_timeline(screen_name='lirr', count=300, page=2)]
@@ -47,8 +48,10 @@ class lirr():
 
 	def process_delay_times(self):
 		line = ''
+		start_times = {}
 		for delay in self.delays:
 			delay = delay.lower()
+			start_time = re.search(r'\d*:\d*..',delay).group(0)
 			#get branch
 			for station in self.station_map:
 				if station in delay:
@@ -56,10 +59,14 @@ class lirr():
 			#remove start/end times by starting at the 'is operating' substring
 			delay = delay[delay.find('operating'):]
 			delay_time = int(re.search(r'\d+',delay).group(0))
-			if line in self.total_delay_times:
-				self.total_delay_times[line] = self.total_delay_times[line] + delay_time
+			start_times[start_time] = [delay_time, line]
+
+		for pair in start_times.values():
+			if pair[1] in self.total_delay_times:
+				self.total_delay_times[pair[1]] = self.total_delay_times[pair[1]] + pair[0]
 			else:
-				self.total_delay_times[line] = delay_time
+				self.total_delay_times[pair[1]] = pair[0]
+
 
 	def return_delays(self):
 		self.load_tweets()
