@@ -31,13 +31,13 @@ class lirr():
 		self.api = tweepy.API(auth)
 	
 	def load_tweets(self):	
-		self.total_delay_times = {}
+		self.total_delay_times['first'] = {}
 		# Load 2 pages of tweets
 		self.tweets = [(tweet.text, tweet.created_at) for tweet in self.api.user_timeline(screen_name='lirr', count=300, page=1)+
 					   self.api.user_timeline(screen_name='lirr', count=300, page=2)]
-		self.total_delay_times['day'] = self.tweets[-1][1].day
-		self.total_delay_times['month'] = self.tweets[-1][1].month
-		self.total_delay_times['year'] = self.tweets[-1][1].year
+		self.total_delay_times['first']['day'] = self.tweets[-1][1].day
+		self.total_delay_times['first']['month'] = self.tweets[-1][1].month
+		self.total_delay_times['first']['year'] = self.tweets[-1][1].year
 
 	def get_relevant_tweets(self):
 		for tweet in self.tweets:
@@ -47,6 +47,7 @@ class lirr():
 				self.cancels.append(tweet[0])
 
 	def process_delay_times(self):
+		self.total_delay_times['delays'] = {}
 		line = ''
 		start_times = {}
 		for delay in self.delays:
@@ -62,11 +63,13 @@ class lirr():
 			start_times[start_time] = [delay_time, line]
 
 		for pair in start_times.values():
-			if pair[1] in self.total_delay_times:
-				self.total_delay_times[pair[1]] = self.total_delay_times[pair[1]] + pair[0]
+			if pair[1] in self.total_delay_times['delays']:
+				self.total_delay_times['delays'][pair[1]] = self.total_delay_times['delays'][pair[1]] + pair[0]
 			else:
-				self.total_delay_times[pair[1]] = pair[0]
+				self.total_delay_times['delays'][pair[1]] = pair[0]
 
+	def get_cancellation_counts(self):
+		pass
 
 	def return_delays(self):
 		self.load_tweets()
