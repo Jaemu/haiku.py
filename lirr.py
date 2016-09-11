@@ -48,9 +48,9 @@ class lirr():
 
 	def process_delay_times(self):
 		self.total_delay_times['delays'] = {}
-		line = ''
 		start_times = {}
 		for delay in self.delays:
+			line = ''
 			delay = delay.lower()
 			start_time = re.search(r'\d*:\d*..',delay).group(0)
 			#get branch
@@ -68,12 +68,26 @@ class lirr():
 			else:
 				self.total_delay_times['delays'][pair[1]] = pair[0]
 
-	def get_cancellation_counts(self):
-		pass
+	def process_cancellation_counts(self):
+		self.total_delay_times['cancellations'] = {}
+		start_times = {}
+		for cancel in self.cancels:
+			print cancel
+			line = ''
+			cancel = cancel.lower()
+			start_time = re.search(r'\d*:\d*..',cancel).group(0)
+			for station in self.station_map:
+				if station not in self.total_delay_times['cancellations']:
+					self.total_delay_times['cancellations'][station] = 0
+				if station in cancel:
+					line = self.station_map[station]
+			if start_time not in start_times:
+				self.total_delay_times['cancellations'][line] = self.total_delay_times['cancellations'][line] + 1
 
 	def return_delays(self):
 		self.load_tweets()
 		self.get_relevant_tweets()
 		self.process_delay_times()
+		self.process_cancellation_counts()
 		return self.total_delay_times
 
