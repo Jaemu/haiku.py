@@ -32,15 +32,18 @@ class lirr():
 	
 	def load_tweets(self):	
 		# Load 2 pages of tweets
-		self.tweets = [tweet.text for tweet in self.api.user_timeline(screen_name='lirr', count=300, page=1)+
+		self.tweets = [(tweet.text, tweet.created_at) for tweet in self.api.user_timeline(screen_name='lirr', count=300, page=1)+
 					   self.api.user_timeline(screen_name='lirr', count=300, page=2)]
+		self.total_delay_times['day'] = self.tweets[-1][1].day
+		self.total_delay_times['month'] = self.tweets[-1][1].month
+		self.total_delay_times['year'] = self.tweets[-1][1].year
 
 	def get_relevant_tweets(self):
 		for tweet in self.tweets:
-			if self.delay_regex.match(tweet):
-				self.delays.append(tweet)
-			elif self.canceled_regex.match(tweet):
-				self.cancels.append(tweet)
+			if self.delay_regex.match(tweet[0]):
+				self.delays.append(tweet[0])
+			elif self.canceled_regex.match(tweet[0]):
+				self.cancels.append(tweet[0])
 
 	def process_delay_times(self):
 		line = ''
