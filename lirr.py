@@ -94,7 +94,7 @@ class lirr():
 			excuse = excuse + '.'
 			excuse = re.search(r'due to.*\.',excuse).group(0)
 			if excuse not in self.total_delay_times['excuses']:
-				self.total_delay_times['excuses'].append(excuse)
+				self.total_delay_times['excuses'].append(excuse[7:])
 
 	def return_delays(self):
 		self.load_tweets()
