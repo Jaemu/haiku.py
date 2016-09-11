@@ -9,6 +9,7 @@ class lirr():
 		self.tweets = []
 		self.delays = []
 		self.cancels = []
+		self.excuses = []
 		self.total_delay_times = {}
 		# Load list of stops pre-ordered east -> west
 		with open('stops.p') as f:
@@ -24,6 +25,7 @@ class lirr():
 
 		self.delay_regex = re.compile('^.* is operating \d* .* late .*$')
 		self.canceled_regex = re.compile('^.*canceled.*$')
+		self.excuse_regex = re.compile('^.*due to.*$')
 
 		# Authenticate with Twitter
 		auth = tweepy.OAuthHandler(secrets['consumer_key'], secrets['consumer_secret_key'])
@@ -45,6 +47,8 @@ class lirr():
 				self.delays.append(tweet[0])
 			elif self.canceled_regex.match(tweet[0]):
 				self.cancels.append(tweet[0])
+			if self.excuse_regex.match(tweet[0]):
+				self.excuses.append(tweet[0])
 
 	def process_delay_times(self):
 		self.total_delay_times['delays'] = {}
@@ -82,11 +86,21 @@ class lirr():
 					line = self.station_map[station]
 			if start_time not in start_times:
 				self.total_delay_times['cancellations'][line] = self.total_delay_times['cancellations'][line] + 1
+			start_times[start_time] = cancel
+
+	def process_excuses(self):
+		self.total_delay_times['excuses'] = []
+		for excuse in self.excuses:
+			excuse = excuse + '.'
+			excuse = re.search(r'due to.*\.',excuse).group(0)
+			if excuse not in self.total_delay_times['excuses']:
+				self.total_delay_times['excuses'].append(excuse)
 
 	def return_delays(self):
 		self.load_tweets()
 		self.get_relevant_tweets()
 		self.process_delay_times()
 		self.process_cancellation_counts()
+		self.process_excuses()
 		return self.total_delay_times
 
