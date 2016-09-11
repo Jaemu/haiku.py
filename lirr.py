@@ -71,12 +71,12 @@ class lirr():
 	def process_cancellation_counts(self):
 		self.total_delay_times['cancellations'] = {}
 		start_times = {}
+		for line in set(self.station_map.values()):
+			self.total_delay_times['cancellations'][line] = 0
 		for cancel in self.cancels:
 			line = ''
 			cancel = cancel.lower()
 			start_time = re.search(r'\d*:\d*..',cancel).group(0)
-			for line in set(self.station_map.values()):
-				self.total_delay_times['cancellations'][line] = 0
 			for station in self.station_map:
 				if station in cancel:
 					line = self.station_map[station]
