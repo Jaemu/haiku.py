@@ -1,2 +1,4 @@
 access.json
+*.pyc
 */*.pyc
+*/*/*.pyc
