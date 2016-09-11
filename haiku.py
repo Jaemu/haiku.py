@@ -47,13 +47,13 @@ class Haiku:
 			]
 			]
 		]
-		self.insult_pattern = [
-			"You're the",
-			("JJS"),
-			("NN"),
-			("that ever"),
-			("VBD")
-		]
+		#self.insult_pattern = [
+		#	"You're the",
+		#	("JJS"),
+		#	("NN"),
+		#	("that ever"),
+		#	("VBD")
+		#]
 		self.worse_insult_pattern = [
 			"Your mother was a",
 			("NN"),
@@ -153,7 +153,8 @@ class Haiku:
 
 	def insult(self, name="Sunshine"):
 		currentInsult = ""
-		insultPattern = random.choice([self.insult_pattern, self.worse_insult_pattern])
+		#insultPattern = random.choice([self.insult_pattern, self.worse_insult_pattern])
+		insultPattern = self.worse_insult_pattern
 		for pattern in insultPattern:
 			if pattern in self.grammar:
 				similarWords = [x for x in self.tagged_words if x[1] == pattern]
