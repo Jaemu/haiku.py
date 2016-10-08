@@ -54,6 +54,8 @@ class lirr():
 		self.total_delay_times['delays'] = {}
 		start_times = {}
 		for delay in self.delays:
+			if '@' in delay:
+				continue
 			line = ''
 			delay = delay.lower()
 			start_time = re.search(r'\d*:\d*..',delay).group(0)
